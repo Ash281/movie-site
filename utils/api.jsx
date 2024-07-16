@@ -11,7 +11,6 @@ export async function fetchMovies(filters) {
 
 export async function fetchMovieDetails(id) {
   const response = await fetch(`${API_URL}&i=${id}&plot=full`);
-  const data = await response.json()
-  
+  const data = await response.json();
   return data;
 }
