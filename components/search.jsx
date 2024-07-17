@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMovies } from '../utils/api'; // Adjust path as needed
 import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -80,15 +82,16 @@ const Search = () => {
         {movies === null ? (
           <p className="mt-2 text-gray-600">No movies found.</p>
         ) : (
-          <ul className="divide-y divide-gray-200 mt-2">
+          <ul className="divide-y divide-gray-200 mt-2 text-left">
             {movies.map((movie) => (
               <li key={movie.imdbID} className="py-2">
-              <button onClick={() => handleMovieClick(movie.imdbID)} className='py-2'>
-          
-                <h3 className="text-lg font-semibold">{movie.Title}</h3>
-                <p>Year: {movie.Year}</p>
-                <p>IMDB ID: {movie.imdbID}</p>
-              
+              <button onClick={() => handleMovieClick(movie.imdbID)} className='py-2 flex items-center justify-between w-full'>
+                <div className='text-left'>
+                  <h3 className="text-lg font-semibold">{movie.Title}</h3>
+                  <p>Year: {movie.Year}</p>
+                  <FontAwesomeIcon icon={faHeart} className="text-red-500 mr-2" />
+                </div>
+                <img src={movie.Poster} alt={movie.Title} className="w-20 h-30 ml-4" />
               </button>
               </li>
             ))}
