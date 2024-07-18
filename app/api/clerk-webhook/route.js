@@ -13,15 +13,17 @@ export async function handleWebhookEvent(payload) {
         // Handle the user created event
         await sql`
             CREATE TABLE IF NOT EXISTS Users (
+                ID VARCHAR(255) PRIMARY KEY,
                 Name VARCHAR(255) NOT NULL,
-                Email VARCHAR(255) UNIQUE NOT NULL PRIMARY KEY,
+                Email VARCHAR(255) UNIQUE NOT NULL,
                 Password VARCHAR(255) NOT NULL,
                 CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `;
 
         await sql`
-            INSERT INTO Users (Name, Email, Password, CreatedAt) VALUES (
+            INSERT INTO Users (ID, Name, Email, Password, CreatedAt) VALUES (
+                ${id},
                 ${first_name + ' ' + last_name},
                 ${email_addresses[0].email_address},
                 'default_password', -- Replace with the actual password if available
@@ -37,15 +39,15 @@ export async function handleWebhookEvent(payload) {
             UPDATE Users SET
                 Name = ${first_name + ' ' + last_name},
                 Email = ${email_addresses[0].email_address}
-            WHERE Email = ${email_addresses[0].email_address}
+            WHERE ID = ${id}
         `;
         console.log(`User with ID ${id} updated`);
     } else if (type === 'user.deleted') {
-        const { email_addresses } = data;
+        const { id } = data;
 
         // Handle the user deleted event
         await sql`
-            DELETE FROM Users WHERE Email = ${email_addresses[0].email_address}
+            DELETE FROM Users WHERE ID = ${id}
         `;
         console.log(`User with ID ${id} deleted`);
     } else {
