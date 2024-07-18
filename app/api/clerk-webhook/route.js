@@ -8,7 +8,7 @@ export async function handleWebhookEvent(payload) {
 
     if (type === 'user.created') {
         // Extract user details from the payload
-        const { id, first_name, last_name, email_addresses } = data;
+        const { id, first_name, last_name, email_addresses, profile_image_url } = data;
 
         // Handle the user created event
         await sql`
@@ -17,7 +17,7 @@ export async function handleWebhookEvent(payload) {
                 Name VARCHAR(255) NOT NULL,
                 Email VARCHAR(255) UNIQUE NOT NULL,
                 Password VARCHAR(255) NOT NULL,
-                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             )
         `;
 
