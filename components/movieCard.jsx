@@ -34,7 +34,8 @@ const MovieCard = ({ movie }) => {
     router.push(`/title/${movie.imdbID}`);
   };
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
     console.log('Liking movie:', movie.imdbID);
     console.log('User ID:', clerkId);
 
