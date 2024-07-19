@@ -1,20 +1,12 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { fetchMovies } from '../utils/api';
-import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { useClerk } from '@clerk/nextjs';
-import axios from 'axios';
+import MovieCard from './movieCard';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [movies, setMovies] = useState([]);
-  const { user } = useClerk();
-  const clerkId = user.id;
-
-  const router = useRouter();
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -53,33 +45,6 @@ const Search = () => {
     fetchMovieData();
   };
 
-  const handleMovieClick = (movieId) => {
-    router.push(`/title/${movieId}`);
-  };
-
-  const handleLike = async (movieId) => {
-    console.log('Liking movie:', movieId);
-    console.log('User ID:', clerkId); // Assuming clerkId holds userId
-
-    try {
-        const response = await axios.post('/api/user-likes-movie', {
-            movieId,
-            userId: clerkId, // Assuming clerkId holds userId
-            like: true,
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        console.log('Movie liked successfully:', response.data.message); // Assuming response structure
-        // Handle success scenario if needed
-    } catch (error) {
-        console.error('Error liking movie:', error);
-        // Handle error scenario
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-start">
       <form onSubmit={handleSubmit} className="relative">
@@ -99,29 +64,7 @@ const Search = () => {
         ) : (
           <ul className="divide-y divide-gray-200 mt-2 text-left">
             {movies.map((movie) => (
-              <li key={movie.imdbID} className="py-2">
-                <button
-                  onClick={() => handleMovieClick(movie.imdbID)}
-                  className="py-2 flex items-center justify-between w-full"
-                >
-                  <div className="text-left">
-                    <h3 className="text-lg font-semibold">{movie.Title}</h3>
-                    <p>Year: {movie.Year}</p>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      className={`text-red-500 mr-2 ${
-                        movie.liked ? 'cursor-default' : 'cursor-pointer'
-                      }`}
-                      onClick={() => handleLike(movie.imdbID)}
-                    />
-                  </div>
-                  <img
-                    src={movie.Poster}
-                    alt={movie.Title}
-                    className="w-20 h-30 ml-4"
-                  />
-                </button>
-              </li>
+              <MovieCard key={movie.imdbID} movie={movie} />
             ))}
           </ul>
         )}
@@ -131,4 +74,3 @@ const Search = () => {
 };
 
 export default Search;
-
