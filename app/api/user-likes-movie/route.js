@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
     const bodyText = await request.text();
-    console.log('Request body:', bodyText);
     const { movieId, userId, like } = JSON.parse(bodyText);
     console.log('Movie ID:', movieId);
     console.log('User ID:', userId);
