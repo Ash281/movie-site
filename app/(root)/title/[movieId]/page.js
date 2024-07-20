@@ -22,23 +22,47 @@ const MovieDetails = () => {
   }
 
   return (
-    <div
-      className="bg-repeat bg-cover text-white h-screen w-screen flex items-center flex-col justify-center"
-      style={{
-        backgroundImage: `url(${movie.Poster})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-        <button
-        onClick={() => window.history.back()}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-20 left-10"
-      >
-        Back to search
-      </button>
-      <div className="bg-black bg-opacity-75 p-10 mx-10 rounded-md">
-        <h1 className="text-4xl font-bold">{movie.Title}</h1>
-        <p className="mt-2 text-lg">{movie.Plot}</p>
+    <div className="relative min-h-screen flex flex-col">
+      {/* Background Image with Blur */}
+      <div
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage: `url(${movie.Poster})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(12px)',
+          WebkitFilter: 'blur(12px)',
+          opacity: 0.6,
+        }}
+      />
+      
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 -z-10" />
+
+      {/* Content */}
+      <div className="fixed top-16 left-0 right-0 bottom-0 overflow-y-auto flex flex-col items-center p-6">
+        <div className="relative z-10 flex flex-col items-center justify-center bg-black bg-opacity-75 p-8 rounded-lg max-w-4xl w-full mx-4">
+          <h1 className="text-4xl font-bold mb-4">{movie.Title}</h1>
+          <img
+            src={movie.Poster}
+            alt={movie.Title}
+            className="w-80 h-auto mb-4"
+          />
+          <div className="text-center">
+            <p className="mb-2">
+              <strong>Genre:</strong> {movie.Genre}
+            </p>
+            <p className="mb-2">
+              <strong>Director:</strong> {movie.Director}
+            </p>
+            <p className="mb-2">
+              <strong>Actors:</strong> {movie.Actors}
+            </p>
+            <p className="mt-4">
+              <strong>Plot:</strong> {movie.Plot}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
