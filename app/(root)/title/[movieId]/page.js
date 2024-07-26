@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchMovieDetails } from "../../../../utils/api";
+import ReviewForm from "../../../../components/reviewForm";
 
 const MovieDetails = () => {
+
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -16,6 +19,7 @@ const MovieDetails = () => {
 
     getMovieDetails();
   }, [movieId]);
+
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -62,9 +66,22 @@ const MovieDetails = () => {
               <strong>Plot:</strong> {movie.Plot}
             </p>
           </div>
+          <ReviewForm movieId={movie.imdbID} />
+          <div className="mt-8 w-full max-w-2xl">
+            <h2 className="text-2xl mb-4">Reviews</h2>
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div key={index} className="mb-4 bg-white p-4 rounded shadow">
+                  <p>{review}</p>
+                </div>
+              ))
+            ) : (
+              <p>No reviews yet. Be the first to write one!</p>
+            )}
+          </div>
+        </div>
         </div>
       </div>
-    </div>
   );
 };
 
