@@ -58,7 +58,7 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <li className="py-2 border p-10">
+    <li className="py-2 border-2 p-10">
       <button
         onClick={handleMovieClick}
         className="py-2 flex items-center justify-between w-full transform transition duration-300 hover:scale-105 hover:shadow-lg"
