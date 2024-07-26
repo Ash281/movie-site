@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchMovieDetails } from "../../../../utils/api";
 import ReviewForm from "../../../../components/reviewForm";
+import { useClerk } from "@clerk/nextjs";
+import axios from "axios";
 
 const MovieDetails = () => {
-
+  const { user } = useClerk();
+  const clerkId = user?.id || null;
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -19,7 +22,6 @@ const MovieDetails = () => {
 
     getMovieDetails();
   }, [movieId]);
-
 
   if (!movie) {
     return <div>Loading...</div>;
