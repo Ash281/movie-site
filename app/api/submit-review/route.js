@@ -49,7 +49,7 @@ export async function POST(request) {
                     ${rating}
                 )
                 ON CONFLICT (UserID, MovieID)
-                DO UPDATE SET Review = EXCLUDED.Review, Rating = EXCLUDED.Rating;
+                DO UPDATE SET Review = EXCLUDED.Review, Rating = EXCLUDED.Rating, CreatedAt = CURRENT_TIMESTAMP;
             `;
             console.log('Review and rating submitted successfully');
             return NextResponse.json({ message: 'Review and rating submitted successfully' }, { status: 200 });

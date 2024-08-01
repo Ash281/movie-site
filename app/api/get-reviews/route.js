@@ -11,7 +11,7 @@ export async function GET(request) {
         const user_review = await sql`
             SELECT r.*, u.name
             FROM UserReviewsMovie r
-            JOIN Users u ON r.UserID = u.ID
+            LEFT JOIN Users u ON r.UserID = u.ID
             WHERE r.UserID = ${userId} AND r.MovieID = ${movieId};
         `;
 
@@ -23,7 +23,7 @@ export async function GET(request) {
         const all_reviews = await sql`
             SELECT r.*, u.name
             FROM UserReviewsMovie r
-            JOIN Users u ON r.UserID = u.ID
+            LEFT JOIN Users u ON r.UserID = u.ID
             WHERE r.MovieID = ${movieId};
         `;
 
@@ -37,9 +37,9 @@ export async function GET(request) {
             WHERE MovieID = ${movieId};
         `;
         
-        if (user_review.rows.length === 0) {
-            return NextResponse.json({ error: 'No review found for the given user and movie.' }, { status: 404 });
-        }
+        // if (user_review.rows.length === 0) {
+        //     return NextResponse.json({ error: 'No review found for the given user and movie.' }, { status: 404 });
+        // }
 
         console.log('User review:', user_review.rows[0], 'All reviews:', all_reviews.rows, 'Average rating:', average_rating.rows[0].average_rating);
         return NextResponse.json({
