@@ -1,8 +1,9 @@
 import React from "react";
 import { useClerk } from "@clerk/nextjs";
 import axios from "axios";
+import dayjs from "dayjs";
 
-const ReviewForm = (movieId) => {
+const ReviewForm = ({movieId, onNewReview}) => {
     const { user } = useClerk();
     const clerkId = user?.id || null;
 
@@ -11,11 +12,11 @@ const ReviewForm = (movieId) => {
         console.log(e.target);
         const review = e.target.review.value;
         const rating = e.target.rating.value;
-        console.log(review, rating);
+        console.log(review, rating, movieId);
         try {
             const response = await axios.post('/api/submit-review', {
                 userId: clerkId,
-                movieId: movieId.movieId,
+                movieId,
                 review,
                 rating,
             }, {
@@ -23,6 +24,14 @@ const ReviewForm = (movieId) => {
                     'Content-Type': 'application/json',
                 }
             });
+            const newReview = {
+                name: user.fullName.split(' ')[0],
+                review,
+                rating,
+                createdat: dayjs().format('MMMM D, YYYY'),
+            };
+            console.log(newReview);
+            onNewReview(newReview);
             console.log('Review submitted successfully:', response.data.message);
         } catch (error) {
             console.error('Error submitting review:', error);

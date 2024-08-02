@@ -43,6 +43,11 @@ const MovieDetails = () => {
     getReviews();
   }, [clerkId, movieId]);
 
+  const handleNewReview = async (newReview) => {
+    setReviews((reviews) => [newReview, ...reviews]);
+    setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
+  };
+
   if (!movie) {
     return <div>Loading...</div>;
   }
@@ -89,7 +94,7 @@ const MovieDetails = () => {
             </p>
           </div>
           {clerkId ? (
-          <ReviewForm movieId={movie.imdbID} />
+          <ReviewForm movieId={movie.imdbID} onNewReview={handleNewReview} />
           )
           : (
             <div className="mt-8 w-full max-w-2xl text-center text-white text-bold text-xl">
@@ -116,6 +121,6 @@ const MovieDetails = () => {
         </div>
       </div>
   );
-};
+}
 
 export default MovieDetails;
