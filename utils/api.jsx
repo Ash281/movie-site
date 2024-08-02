@@ -1,5 +1,5 @@
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY
-const API_URL = `http://www.omdbapi.com/?apikey=${API_KEY}`;
+const API_URL = `https://www.omdbapi.com/?apikey=${API_KEY}`;
 
 export async function fetchMovies(filters) {
   const { title } = filters;
