@@ -17,7 +17,7 @@ export async function handleWebhookEvent(payload) {
                 Name VARCHAR(255) NOT NULL,
                 Email VARCHAR(255) UNIQUE NOT NULL,
                 Password VARCHAR(255) NOT NULL,
-                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `;
 
