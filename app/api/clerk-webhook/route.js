@@ -98,7 +98,7 @@ export async function POST(req) {
     const eventType = evt.type;
 
     console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
-    handleWebhookEvent(evt);
+    await handleWebhookEvent(evt);
 
     return new Response('', { status: 200 });
 }
