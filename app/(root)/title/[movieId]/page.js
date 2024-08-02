@@ -88,7 +88,14 @@ const MovieDetails = () => {
               <strong>Plot:</strong> {movie.Plot}
             </p>
           </div>
+          {clerkId ? (
           <ReviewForm movieId={movie.imdbID} />
+          )
+          : (
+            <div className="mt-8 w-full max-w-2xl text-center text-white text-bold text-xl">
+              <p>Please log in to write a review</p>
+            </div>
+          )}
           <div className="mt-8 w-full max-w-2xl">
             <h2 className="text-2xl mb-4">Average Rating: {Number(rating)}</h2>
             <h2 className="text-2xl mb-4">Reviews</h2>
