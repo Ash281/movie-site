@@ -15,13 +15,13 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
+  const [userReview, setUserReview] = useState(null);
 
   useEffect(() => {
     const getMovieDetails = async () => {
       const movieData = await fetchMovieDetails(movieId);
       setMovie(movieData);
     };
-
     getMovieDetails();
   }, [movieId]);
 
@@ -36,6 +36,7 @@ const MovieDetails = () => {
         });
         setReviews(response.data.all_reviews);
         setRating(response.data.average_rating);
+        console.log("All reviews:", response.data.all_reviews);
       } catch (error) {
         console.error("Error getting reviews:", error);
       }
@@ -47,6 +48,29 @@ const MovieDetails = () => {
     setReviews((reviews) => [newReview, ...reviews]);
     setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
   };
+
+  useEffect(() => {
+    const getUserReview = async () => {
+      try {
+        const response = await axios.get("/api/get-user-review", {
+          params: {
+            movieId,
+            userId: clerkId,
+          },
+        });
+        console.log("userid:", clerkId, "movieId:", movieId);
+        console.log("User review:", response.data[0]);
+        if (response.data.message) {
+          setUserReview(null);
+        } else {
+          setUserReview(response.data[0]);
+        }
+      } catch (error) {
+        console.error("Error getting user review:", error);
+      }
+    };
+    getUserReview();
+  }, [clerkId, movieId]);
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -94,9 +118,10 @@ const MovieDetails = () => {
             </p>
           </div>
           {clerkId ? (
-          <ReviewForm movieId={movie.imdbID} onNewReview={handleNewReview} />
-          )
-          : (
+            userReview === null ? (
+              <ReviewForm movieId={movie.imdbID} onNewReview={handleNewReview} />
+            ) : null
+          ) : (
             <div className="mt-8 w-full max-w-2xl text-center text-white text-bold text-xl">
               <p>Please log in to write a review</p>
             </div>
@@ -104,8 +129,16 @@ const MovieDetails = () => {
           <div className="mt-8 w-full max-w-2xl">
             <h2 className="text-2xl mb-4">Average Rating: {Number(rating)}</h2>
             <h2 className="text-2xl mb-4">Reviews</h2>
+            {userReview !== null && (
+              <div className="mb-4 bg-yellow-200 p-4 rounded shadow text-black">
+                <h3 className="font-bold text-black">{(userReview.name).split(' ')[0]}</h3>
+                <p>{userReview.review}</p>
+                <p className="mt-2">Rating: {Number(userReview.rating)}</p>
+                <p>{dayjs(userReview.createdat).format('MMMM D, YYYY')}</p>
+              </div>
+            )}
             {reviews.length > 0 ? (
-              reviews.map((review, index) => (
+              reviews.filter(review => review.userid !== clerkId).map((review, index) => (
                 <div key={index} className="mb-4 bg-white p-4 rounded shadow text-black">
                   <h3 className="font-bold text-black">{(review.name).split(' ')[0]}</h3>
                   <p>{review.review}</p>
@@ -118,8 +151,8 @@ const MovieDetails = () => {
             )}
           </div>
         </div>
-        </div>
       </div>
+    </div>
   );
 }
 

@@ -54,13 +54,18 @@ const ReviewForm = ({movieId, onNewReview}) => {
             <label htmlFor="rating" className="sr-only">
             Rating
             </label>
-            <input
-            type="number"
-            id="rating"
-            name="rating"
-            className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-black"
-            placeholder="Rating (1-5)"
-            />
+            <select
+                id="rating"
+                name="rating"
+                className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-black"
+                defaultValue=""
+                >
+                <option value="" disabled>Select rating</option>
+                {[...Array(10)].map((_, i) => {
+                    const value = (i + 1) * 0.5;
+                    return <option key={value} value={value}>{value}</option>;
+                })}
+                </select>
             <button
             type="submit"
             className="bg-blue-700 text-white py-2 px-4 rounded-lg"
