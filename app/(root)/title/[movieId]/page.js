@@ -49,6 +49,33 @@ const MovieDetails = () => {
     setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
   };
 
+  const handleEditReview = async (review, rating) => {
+    try {
+      const response = await axios.post("/api/edit-review", {
+        userId: clerkId,
+        movieId,
+        review,
+        rating,
+      });
+      console.log("Review updated successfully:", response.data.message);
+    } catch (error) {
+      console.error("Error updating review:", error);
+    }
+  }
+
+  const handleDeleteReview = async () => {
+    try {
+      const response = await axios.post("/api/delete-review", {
+        userId: clerkId,
+        movieId,
+      });
+      setReviews(reviews.filter(review => review.userid !== clerkId));
+      console.log("Review deleted successfully:", response.data.message);
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  }
+
   useEffect(() => {
     const getUserReview = async () => {
       try {
@@ -135,6 +162,20 @@ const MovieDetails = () => {
                 <p>{userReview.review}</p>
                 <p className="mt-2">Rating: {Number(userReview.rating)}</p>
                 <p>{dayjs(userReview.createdat).format('MMMM D, YYYY')}</p>
+                <div className="flex justify-between mt-4">
+                  <button
+                    className="bg-blue-700 text-white py-2 px-4 rounded-lg"
+                    onClick={() => handleEditReview(userReview.review, userReview.rating)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-700 text-white py-2 px-4 rounded-lg"
+                    onClick={handleDeleteReview}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             )}
             {reviews.length > 0 ? (
