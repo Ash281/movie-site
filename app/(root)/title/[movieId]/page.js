@@ -69,8 +69,8 @@ const MovieDetails = () => {
         userId: clerkId,
         movieId,
       });
-      setReviews(reviews.filter(review => review.userid !== clerkId));
-      console.log("Review deleted successfully:", response.data.message);
+      setReviews((prevReviews) => prevReviews.filter((review) => review.userid !== clerkId));
+      setUserReview(null);
     } catch (error) {
       console.error("Error deleting review:", error);
     }
