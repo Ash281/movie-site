@@ -45,8 +45,9 @@ const MovieDetails = () => {
   }, [clerkId, movieId]);
 
   const handleNewReview = async (newReview) => {
-    setReviews((reviews) => [newReview, ...reviews]);
+    setReviews((reviews) => [newReview, ...reviews.filter(review => review.userid !== clerkId)]);
     setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
+    setUserReview(newReview);
   };
 
   const handleEditReview = async (review, rating) => {
@@ -70,6 +71,7 @@ const MovieDetails = () => {
         movieId,
       });
       setReviews((prevReviews) => prevReviews.filter((review) => review.userid !== clerkId));
+      setRating((rating * reviews.length - userReview.rating) / (reviews.length - 1));
       setUserReview(null);
     } catch (error) {
       console.error("Error deleting review:", error);
@@ -178,6 +180,7 @@ const MovieDetails = () => {
                 </div>
               </div>
             )}
+
             {reviews.length > 0 ? (
               reviews.filter(review => review.userid !== clerkId).map((review, index) => (
                 <div key={index} className="mb-4 bg-white p-4 rounded shadow text-black">
@@ -190,6 +193,7 @@ const MovieDetails = () => {
             ) : (
               <p>No reviews yet. Be the first to write one!</p>
             )}
+
           </div>
         </div>
       </div>
