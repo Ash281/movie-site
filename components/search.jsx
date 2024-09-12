@@ -42,11 +42,11 @@ const Search = () => {
         onChange={handleChange}
       />
       {searchTerm && (
-        <div className="absolute top-full left-0 mt-2 w-full bg-white shadow-lg rounded-lg z-10">
+        <div className="absolute top-full left-0 mt-2 w-full bg-gray-900 text-white shadow-lg rounded-lg z-10">
           {movies.length === 0 ? (
-            <p className="p-4 text-gray-600">No movies found.</p>
+            <p className="p-4 text-gray-400">No movies found.</p>
           ) : (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-gray-600">
               {movies.map((movie) => (
                 <MovieCard key={movie.imdbID} movie={movie} />
               ))}

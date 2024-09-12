@@ -36,9 +36,6 @@ const MovieCard = ({ movie }) => {
 
   const handleLike = async (e) => {
     e.stopPropagation();
-    console.log('Liking movie:', movie.imdbID);
-    console.log('User ID:', clerkId);
-
     try {
       const response = await axios.post('/api/user-likes-movie', {
         movieId: movie.imdbID,
@@ -50,31 +47,29 @@ const MovieCard = ({ movie }) => {
         }
       });
       setLiked(!liked);
-
-      console.log('Movie liked successfully:', response.data.message);
     } catch (error) {
       console.error('Error liking movie:', error);
     }
   };
 
   return (
-    <li className="py-2 border-2 p-10 text-black">
+    <li className="py-2 border-2 p-4 text-white bg-new-gray hover:bg-gray-600 rounded-md">
       <button
         onClick={handleMovieClick}
-        className="py-2 flex items-center justify-between w-full transform transition duration-300 hover:scale-105 hover:shadow-lg"
+        className="flex items-center justify-between w-full transform transition duration-300 hover:scale-105 hover:shadow-lg"
       >
-        <div className="text-left">
+        <div className="text-left w-full">
           <h3 className="text-lg font-semibold">{movie.Title}</h3>
           <p>Year: {movie.Year}</p>
-          <div className="mt-2">
+          <div className="mt-2 flex items-center">
             {loading ? (
-              <span className="text-gray-500">Loading...</span>
+              <span className="text-gray-400">Loading...</span>
             ) : (
-            <FontAwesomeIcon
-              icon={faHeart}
-              className={`transform text-2xl transition duration-300 ${liked ? 'text-red-500' : 'text-gray-500'} hover:scale-125`}
-              onClick={handleLike}
-            />
+              <FontAwesomeIcon
+                icon={faHeart}
+                className={`text-2xl transition duration-300 ${liked ? 'text-red-500' : 'text-gray-500'} hover:scale-125`}
+                onClick={handleLike}
+              />
             )}
           </div>
         </div>
