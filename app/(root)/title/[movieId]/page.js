@@ -241,7 +241,7 @@ const MovieDetails = () => {
           </div>
 
           <div className="mt-8 w-full max-w-2xl">
-            <h2 className="text-2xl mb-4">Similar Movies</h2>
+            <h2 className="text-2xl mb-4">Similar movies & shows</h2>
             {similarMovies.length > 0 ? (
               similarMovies.map((title, index) => (
                 <div key={index} className="mb-4 bg-white p-4 rounded shadow text-black">

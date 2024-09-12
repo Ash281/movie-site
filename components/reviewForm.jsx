@@ -48,7 +48,7 @@ const ReviewForm = ({movieId, onNewReview}) => {
             <textarea
             id="review"
             name="review"
-            className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-black"
+            className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-white"
             placeholder="Write your review here..."
             />
             <label htmlFor="rating" className="sr-only">
@@ -57,7 +57,7 @@ const ReviewForm = ({movieId, onNewReview}) => {
             <select
                 id="rating"
                 name="rating"
-                className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-black"
+                className="w-full p-4 border border-gray-300 rounded-lg mb-4 text-white"
                 defaultValue=""
                 >
                 <option value="" disabled>Select rating</option>
