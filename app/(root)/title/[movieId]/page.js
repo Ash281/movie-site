@@ -20,7 +20,7 @@ const MovieDetails = () => {
   const [similarMovies, setSimilarMovies] = useState([]);
 
   const getValueOrNone = (value) => {
-    return value ? value : None;
+    return value ? value : '';
   };
 
   const makeQueryString = (movie) => {
@@ -29,14 +29,17 @@ const MovieDetails = () => {
     const director = getValueOrNone(movie.Director);
     const actors = getValueOrNone(movie.Actors);
     const country = getValueOrNone(movie.Country);
-    const title = getValueOrNone(movie.Title);
+    const rating = getValueOrNone(movie.Rated);
+    const released = getValueOrNone(movie.Year);
 
-    const queryString = 'Title: ' + title + '.' +
+    const queryString =
     ' Description (important): ' + description + '.' +
+    ' Genre: ' + genre + '.' +
     ' Cast: ' + actors + '.' +
-    ' Director: ' + director + '.' +
+    ' Year: ' + released + '.' +
     ' Country: ' + country + '.' +
-    ' Listed in: ' + genre + '.';
+    ' Listed in: ' + genre + '.' +
+    ' Rating: ' + rating + '.';
 
     console.log("Query string:", queryString);
     return queryString;
@@ -57,12 +60,13 @@ const MovieDetails = () => {
           query: makeQueryString(movie),
         });
         console.log("Similar movies:", response.data.recommended_movies);
-        setSimilarMovies(response.data);
+        setSimilarMovies(response.data.recommended_movies);
       } catch (error) {
         console.error("Error getting similar movies:", error);
       }
     };
     getSimilarMovies();
+    console.log(similarMovies.length);
   }, [movie]);
 
   useEffect(() => {
@@ -235,6 +239,20 @@ const MovieDetails = () => {
             )}
 
           </div>
+
+          <div className="mt-8 w-full max-w-2xl">
+            <h2 className="text-2xl mb-4">Similar Movies</h2>
+            {similarMovies.length > 0 ? (
+              similarMovies.map((title, index) => (
+                <div key={index} className="mb-4 bg-white p-4 rounded shadow text-black">
+                  {title}
+                </div>
+              ))
+            ) : (
+              <p>No similar movies found</p>
+            )}
+          </div>
+
         </div>
       </div>
     </div>

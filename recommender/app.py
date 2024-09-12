@@ -23,7 +23,7 @@ app.add_middleware(
 df = pd.read_csv("netflix_titles.csv")
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-index = faiss.read_index('netflix_movies_index.index')
+index = faiss.read_index('netflix_movies_index_v3.index')
 
 @app.post("/api/recommend")
 async def recommend_movie(request: Request):
