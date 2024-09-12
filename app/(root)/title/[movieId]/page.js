@@ -45,9 +45,9 @@ const MovieDetails = () => {
   }, [clerkId, movieId]);
 
   const handleNewReview = async (newReview) => {
-    setReviews((reviews) => [newReview, ...reviews.filter(review => review.userid !== clerkId)]);
-    setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
     setUserReview(newReview);
+    setReviews((prevReviews) => [newReview, ...prevReviews.filter(review => review.userid !== clerkId)]);
+    setRating((rating * reviews.length + newReview.rating) / (reviews.length + 1));
   };
 
   const handleEditReview = async (review, rating) => {
