@@ -6,11 +6,12 @@ from sentence_transformers import SentenceTransformer
 
 app = FastAPI()
 
-df = pd.read_csv("netflix_movies.csv")
+df = pd.read_csv("netflix_titles.csv")
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 index = faiss.read_index('netflix_movies_index.index')
 
+@app.get("/recommend")
 async def recommend_movie(query: str):
     try:
         query_embedding = np.array(model.encode([query]))

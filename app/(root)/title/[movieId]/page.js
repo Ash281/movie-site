@@ -7,6 +7,7 @@ import ReviewForm from "../../../../components/reviewForm";
 import { useClerk } from "@clerk/nextjs";
 import axios from "axios";
 import dayjs from "dayjs";
+import { make } from "clerk";
 
 const MovieDetails = () => {
   const { user } = useClerk();
@@ -16,6 +17,30 @@ const MovieDetails = () => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
+
+  const getValueOrNone = (value) => {
+    return value ? value : None;
+  };
+
+  const makeQueryString = (movie) => {
+    const description = getValueOrNone(movie.Plot);
+    const genre = getValueOrNone(movie.Genre);
+    const director = getValueOrNone(movie.Director);
+    const actors = getValueOrNone(movie.Actors);
+    const country = getValueOrNone(movie.Country);
+    const title = getValueOrNone(movie.Title);
+
+    const queryString = 'Title: ' + title + '.' +
+    ' Description (important): ' + description + '.' +
+    ' Cast: ' + actors + '.' +
+    ' Director: ' + director + '.' +
+    ' Country: ' + country + '.' +
+    ' Listed in: ' + genre + '.';
+
+    console.log("Query string:", queryString);
+    return queryString;
+  };
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -24,6 +49,23 @@ const MovieDetails = () => {
     };
     getMovieDetails();
   }, [movieId]);
+
+  useEffect(() => {
+    const getSimilarMovies = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/recommend", {
+          params: {
+            queryText: makeQueryString(movie),
+          },
+        });
+        console.log("Similar movies:", response.data);
+        setSimilarMovies(response.data);
+      } catch (error) {
+        console.error("Error getting similar movies:", error);
+      }
+    };
+    getSimilarMovies();
+  }, [movie]);
 
   useEffect(() => {
     const getReviews = async () => {
