@@ -153,19 +153,19 @@ const MovieDetails = () => {
     <div className="relative min-h-screen flex flex-col">
       {/* Background Image with Blur */}
       <div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0"
         style={{
           backgroundImage: `url(${movie.Poster})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           filter: 'blur(12px)',
           WebkitFilter: 'blur(12px)',
-          opacity: 0.6,
+          opacity: 0.9,
         }}
       />
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50 -z-10" />
+      <div className="absolute inset-0 bg-black bg-opacity-30 -z-10" />
 
       {/* Content */}
       <div className="fixed top-16 left-0 right-0 bottom-0 overflow-y-auto flex flex-col items-center p-6">

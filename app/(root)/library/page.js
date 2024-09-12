@@ -9,7 +9,6 @@ import { fetchMovieDetails } from "@/utils/api";
 const Library = () => {
   const { user } = useClerk();
   const clerkId = user?.id || null;
-
   const [likedMovies, setLikedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
