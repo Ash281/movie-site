@@ -53,12 +53,10 @@ const MovieDetails = () => {
   useEffect(() => {
     const getSimilarMovies = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/recommend", {
-          params: {
-            queryText: makeQueryString(movie),
-          },
+        const response = await axios.post("http://localhost:8000/api/recommend", {
+          query: makeQueryString(movie),
         });
-        console.log("Similar movies:", response.data);
+        console.log("Similar movies:", response.data.recommended_movies);
         setSimilarMovies(response.data);
       } catch (error) {
         console.error("Error getting similar movies:", error);
