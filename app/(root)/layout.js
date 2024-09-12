@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
-import Navbar from "../../components/navbar";
+import Topbar from "../../components/topbar";
 import {
   ClerkProvider,
   SignInButton,
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ClerkProvider>
-          <Navbar />
+          <Topbar />
           {children}
         </ClerkProvider>
       </body>

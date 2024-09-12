@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import Search from './search';
 
 const Navbar = () => {
 
@@ -25,6 +26,10 @@ const Navbar = () => {
             <img src='/logo.svg' className="h-12 w-30" alt="MovieRadar" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MovieRadar</span>
           </a>
+
+          <div className="flex items-center justify-between w-full md:hidden" id="navbar-user">
+            <Search />
+          </div>
       
   
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
