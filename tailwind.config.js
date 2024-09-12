@@ -37,7 +37,7 @@ module.exports = {
           colors: {
             primary: { DEFAULT: "#00cc99" }, // dark theme colors
             secondary: { DEFAULT: "#00cc99"},
-            background: { DEFAULT: "#2e2f38"}
+            background: { DEFAULT: "#2e2f38"},
           }, // dark theme colors
         },
         // ... custom themes
