@@ -58,7 +58,7 @@ const Navbar = () => {
               <SignedOut>
                 <SignInButton />
               </SignedOut>
-              </div>
+            </div>
           </div>
         </div>
       </nav>

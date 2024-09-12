@@ -5,10 +5,7 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
-
- 
-   
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"   
   ],
   theme: {
     extend: {
@@ -34,7 +31,11 @@ module.exports = {
         },
         dark: {
           layout: {}, // dark theme layout tokens
-          colors: {}, // dark theme colors
+          colors: {
+            primary: { DEFAULT: "#00cc99" }, // dark theme colors
+            secondary: { DEFAULT: "#00cc99"},
+            background: { DEFAULT: "#2e2f38"}
+          }, // dark theme colors
         },
         // ... custom themes
       },
